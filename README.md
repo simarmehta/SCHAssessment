@@ -48,3 +48,134 @@ To customize the deployment, you may need to adjust the following parameters in 
 
 ## Conclusion
 This template provides a basic structure for deploying an application infrastructure on AWS. It is designed for educational purposes and initial project setups. Ensure to tailor the security settings and resource configurations to fit your project's needs before moving to a production environment.
+
+
+
+
+
+
+
+
+#  Assessment Part 2-
+
+---
+
+# Python AWS Lambda Function Deployment Guide
+
+This guide provides step-by-step instructions on how to prepare, package, and deploy a Python AWS Lambda function using this GitHub repository as a starting point. The example function makes an HTTP GET request and returns the requester's IP address.
+
+## Prerequisites
+
+- AWS CLI installed and configured
+- Python 3.x installed
+- Git installed
+
+## Clone the Repository
+
+Start by cloning this repository to your local machine to get the `lambda_function.py` and other necessary files.
+
+```bash
+git clone <repository-url>
+cd <repository-name>
+```
+
+Replace `<repository-url>` with the URL of this GitHub repository and `<repository-name>` with the name of the folder created by `git clone`.
+
+## Prepare Your Function
+
+1. **Create a `requirements.txt` File**
+
+Create a `requirements.txt` file in the root directory of the cloned repository. This file should list all external libraries your Lambda function depends on. For the provided `lambda_function.py`, you need the `requests` library.
+
+```plaintext
+requests
+```
+
+2. **Set Up a Virtual Environment**
+
+It's a good practice to use a virtual environment for Python projects. This keeps your project's dependencies isolated from the system Python.
+
+```bash
+python3 -m venv venv
+source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+```
+
+3. **Install Dependencies**
+
+With the virtual environment activated, install the required libraries specified in `requirements.txt`.
+
+```bash
+pip install -r requirements.txt
+```
+
+4. **Deactivate the Virtual Environment**
+
+Once the dependencies are installed, you can deactivate the virtual environment.
+
+```bash
+deactivate
+```
+
+## Package Your Function
+
+1. **Create a ZIP File**
+
+Navigate to the root directory of your project where `lambda_function.py` and the `venv` directory are located.
+
+- **For Linux/Mac:**
+
+
+- **For Windows:**
+
+```cmd
+cd venv\Lib\site-packages
+powershell Compress-Archive -Path * -DestinationPath $OLDPWD\my-function.zip -Force
+cd $OLDPWD
+powershell Compress-Archive -Path lambda_function.py -Update -DestinationPath my-function.zip
+```
+
+Make sure to replace `python3.x` with the specific version of Python you're using (e.g., `python3.8`).
+
+## Deploy Your Function to AWS Lambda
+
+1. **Create a New Lambda Function on AWS**
+
+- Navigate to the AWS Lambda Console.
+- Click on *Create function* and follow the instructions to create a new function.
+- Choose *Author from scratch*, and set the runtime to match your Python version.
+
+2. **Upload Your ZIP File**
+
+- In the *Function code* section of your Lambda function's configuration page, choose *Upload from* > *.zip file* and upload your `my-function.zip` file.
+- Set the handler information according to your function's entry point. For the provided example, it should be `lambda_function.lambda_handler`.
+
+3. **Test Your Function**
+
+- Configure a test event and execute your Lambda function to ensure it works as expected.
+
+
+
+## Deploy Your Function to AWS Lambda Using the AWS CLI
+
+Once you've packaged your function into a ZIP file, you can deploy it to AWS Lambda using the AWS CLI. This method is efficient for both initial deployments and updates to your function.
+
+### Initial Deployment
+
+If you haven't already created a Lambda function on AWS, you can do so using the AWS CLI. Replace `<function-name>`, `<role-arn>`, and `<runtime>` with your function's name, the ARN of the IAM role that the Lambda function assumes when it executes, and the Python runtime version, respectively.
+
+```bash
+aws lambda create-function --function-name <function-name> \
+  --runtime <runtime> --role <role-arn> \
+  --handler lambda_function.lambda_handler \
+  --zip-file fileb://my-function.zip
+```
+
+For the runtime, use a value like `python3.8` depending on the version of Python you're using. The handler value `lambda_function.lambda_handler` tells AWS Lambda to execute the `lambda_handler` function defined in `lambda_function.py`.
+
+
+## Conclusion
+
+You've now successfully prepared, packaged, and deployed a Python AWS Lambda function using this repository as a starting point. This process can be applied to any Python Lambda function development, allowing for rapid deployment and iteration.
+
+
+

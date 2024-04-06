@@ -5,8 +5,7 @@
 # AWS CloudFormation Template for S3 and EC2
 
 ## Introduction
-This repository contains an AWS CloudFormation template designed to provision an S3 bucket and an EC2 instance. It's a foundational step towards building and deploying applications on AWS, demonstrating infrastructure as code (IaC) principles.
-
+This repository contains an AWS CloudFormation template designed to provision an S3 bucket and an EC2 instance. It's a foundational step towards building and deploying applications on AWS.
 ## Requirements
 - AWS Account
 - AWS CLI installed and configured (optional, for CLI deployment)
@@ -31,23 +30,23 @@ If you prefer using the command line, you can deploy the template using the AWS 
 ```bash
 aws cloudformation create-stack --stack-name MyStack --template-body file://path_to_template/template.yaml --parameters ParameterKey=KeyName,ParameterValue=my-key-pair
 ```
-Replace `path_to_template/template.yaml` with the actual path to your template file and `my-key-pair` with your EC2 KeyPair name.
+Replace `path_to_template/template.yaml` with the actual path to the template file and `my-key-pair` with the EC2 KeyPair name.
 
 ## Customization
 To customize the deployment, you may need to adjust the following parameters in the template:
 - **BucketName:** Ensure the S3 bucket name is unique globally.
-- **ImageId:** Use an AMI that matches your desired AWS region and OS.
-- **InstanceType:** Adjust based on your computing power needs.
-- **KeyName:** Specify your existing EC2 KeyPair for SSH access.
+- **ImageId:** Use an AMI that matches the desired AWS region and OS.
+- **InstanceType:** Adjust based on the computing power needs.
+- **KeyName:** Specify the existing EC2 KeyPair for SSH access.
 
 ## Enhancing Security
-- **SSH Access:** The template currently allows SSH access from any IP address. For enhanced security, limit SSH access to your IP address or a known range of IP addresses by modifying the `CidrIp` parameter under `InstanceSecurityGroup`.
+- **SSH Access:** The template currently allows SSH access from any IP address. For enhanced security, limit SSH access to the IP address or a known range of IP addresses by modifying the `CidrIp` parameter under `InstanceSecurityGroup`.
 - **HTTP Traffic:** Similar to SSH access, consider restricting HTTP access if the EC2 instance doesn't need to be publicly accessible.
-- **Parameters:** Use AWS Secrets Manager for sensitive information and reference them in your CloudFormation template to enhance security.
+- **Parameters:** Use AWS Secrets Manager for sensitive information and reference them in the CloudFormation template to enhance security.
 - **Monitoring:** Enable CloudTrail and Config to monitor and audit AWS resource configurations and changes.
 
 ## Conclusion
-This template provides a basic structure for deploying an application infrastructure on AWS. It is designed for educational purposes and initial project setups. Ensure to tailor the security settings and resource configurations to fit your project's needs before moving to a production environment.
+This template provides a basic structure for deploying an application infrastructure on AWS. It is designed for educational purposes and initial project setups. Ensure to tailor the security settings and resource configurations to fit the project's needs before moving to a production environment.
 
 Resources Provisioned (Image)-
 ![image](https://github.com/simarmehta/SCHAssessment/assets/70880900/a2ab7c20-b96c-48c0-9931-124d767e2fba)
@@ -70,7 +69,7 @@ This guide provides step-by-step instructions on how to prepare, package, and de
 
 ## Clone the Repository
 
-Start by cloning this repository to your local machine to get the `lambda_function.py` and other necessary files.
+Start by cloning this repository to the local machine to get the `lambda_function.py` and other necessary files.
 
 ```bash
 git clone <repository-url>
@@ -79,11 +78,11 @@ cd <repository-name>
 
 Replace `<repository-url>` with the URL of this GitHub repository and `<repository-name>` with the name of the folder created by `git clone`.
 
-## Prepare Your Function
+## Prepare the Function
 
 1. **Create a `requirements.txt` File**
 
-Create a `requirements.txt` file in the root directory of the cloned repository. This file should list all external libraries your Lambda function depends on. For the provided `lambda_function.py`, you need the `requests` library.
+Create a `requirements.txt` file in the root directory of the cloned repository. This file should list all external libraries the Lambda function depends on. For the provided `lambda_function.py`, you need the `requests` library.
 
 ```plaintext
 requests
@@ -91,7 +90,7 @@ requests
 
 2. **Set Up a Virtual Environment**
 
-It's a good practice to use a virtual environment for Python projects. This keeps your project's dependencies isolated from the system Python.
+It's a good practice to use a virtual environment for Python projects. This keeps the project's dependencies isolated from the system Python.
 
 ```bash
 python3 -m venv venv
@@ -114,11 +113,11 @@ Once the dependencies are installed, you can deactivate the virtual environment.
 deactivate
 ```
 
-## Package Your Function
+## Package The Function
 
 1. **Create a ZIP File**
 
-Navigate to the root directory of your project where `lambda_function.py` and the `venv` directory are located.
+Navigate to the root directory of the project where `lambda_function.py` and the `venv` directory are located.
 
 - **For Linux/Mac:**
 
@@ -134,32 +133,32 @@ powershell Compress-Archive -Path lambda_function.py -Update -DestinationPath my
 
 Make sure to replace `python3.x` with the specific version of Python you're using (e.g., `python3.8`).
 
-## Deploy Your Function to AWS Lambda
+## Deploy the Function to AWS Lambda
 
 1. **Create a New Lambda Function on AWS**
 
 - Navigate to the AWS Lambda Console.
 - Click on *Create function* and follow the instructions to create a new function.
-- Choose *Author from scratch*, and set the runtime to match your Python version.
+- Choose *Author from scratch*, and set the runtime to match the Python version.
 
-2. **Upload Your ZIP File**
+2. **Upload the ZIP File**
 
-- In the *Function code* section of your Lambda function's configuration page, choose *Upload from* > *.zip file* and upload your `my-function.zip` file.
-- Set the handler information according to your function's entry point. For the provided example, it should be `lambda_function.lambda_handler`.
+- In the *Function code* section of the Lambda function's configuration page, choose *Upload from* > *.zip file* and upload the `my-function.zip` file.
+- Set the handler information according to the function's entry point. For the provided example, it should be `lambda_function.lambda_handler`.
 
-3. **Test Your Function**
+3. **Test the Function**
 
-- Configure a test event and execute your Lambda function to ensure it works as expected.
+- Configure a test event and execute the Lambda function to ensure it works as expected.
 
 
 
-## Deploy Your Function to AWS Lambda Using the AWS CLI
+## Deploy the Function to AWS Lambda Using the AWS CLI
 
-Once you've packaged your function into a ZIP file, you can deploy it to AWS Lambda using the AWS CLI. This method is efficient for both initial deployments and updates to your function.
+Once you've packaged the function into a ZIP file, you can deploy it to AWS Lambda using the AWS CLI. This method is efficient for both initial deployments and updates to the function.
 
 ### Initial Deployment
 
-If you haven't already created a Lambda function on AWS, you can do so using the AWS CLI. Replace `<function-name>`, `<role-arn>`, and `<runtime>` with your function's name, the ARN of the IAM role that the Lambda function assumes when it executes, and the Python runtime version, respectively.
+If you haven't already created a Lambda function on AWS, you can do so using the AWS CLI. Replace `<function-name>`, `<role-arn>`, and `<runtime>` with the function's name, the ARN of the IAM role that the Lambda function assumes when it executes, and the Python runtime version, respectively.
 
 ```bash
 aws lambda create-function --function-name <function-name> \

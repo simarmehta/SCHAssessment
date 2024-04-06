@@ -49,10 +49,8 @@ To customize the deployment, you may need to adjust the following parameters in 
 ## Conclusion
 This template provides a basic structure for deploying an application infrastructure on AWS. It is designed for educational purposes and initial project setups. Ensure to tailor the security settings and resource configurations to fit your project's needs before moving to a production environment.
 
-
-
-
-
+Resources Provisioned (Image)-
+![image](https://github.com/simarmehta/SCHAssessment/assets/70880900/a2ab7c20-b96c-48c0-9931-124d767e2fba)
 
 
 

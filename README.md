@@ -173,7 +173,7 @@ For the runtime, use a value like `python3.8` depending on the version of Python
 
 ## Conclusion
 
-You've now successfully prepared, packaged, and deployed a Python AWS Lambda function using this repository as a starting point. This process can be applied to any Python Lambda function development, allowing for rapid deployment and iteration.
+Now here we have successfully prepared, packaged, and deployed a Python AWS Lambda function using this repository as a starting point. This process can be applied to any Python Lambda function development.
 
 
 
